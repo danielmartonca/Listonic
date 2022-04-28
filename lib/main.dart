@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:listonic_clone/database/populars.dart';
-import 'package:listonic_clone/home_page/home_page.dart';
 import 'package:listonic_clone/model/product.dart';
+import 'package:listonic_clone/windows/home.dart';
 
 import 'model/listonic_list.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const HomePage(title: 'Listonic'),
+      home: const HomeWindow(title: 'Listonic'),
     );
   }
 }

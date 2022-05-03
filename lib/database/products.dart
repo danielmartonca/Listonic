@@ -12,7 +12,7 @@ class Products {
   static const String boxName = "productsBox";
 
   static Future<List<Product>> getProducts() async {
-    Box box = await Boxes.getProducts();
+    Box box = await ListonicBoxes.getProducts();
     var _productsList = box.values.toList(growable: false).cast<Product>();
     _log.i("Got list of products from database: \n${_productsList.toString()}");
     return _productsList;
@@ -20,13 +20,20 @@ class Products {
 
   static Future<bool> addToProducts(Product dbEntry) async {
     try {
-      Box box = await Boxes.getProducts();
-      box.add(dbEntry);
+      Box box = await ListonicBoxes.getProducts();
+      box.put(dbEntry.name, dbEntry);
       _log.i("Added ${dbEntry.toString()}to '$boxName'.");
       return true;
     } catch (e) {
       _log.e(e);
       return false;
     }
+  }
+
+  static Future<void> updateProduct(String oldKey, Product product) async {
+    Box box = await ListonicBoxes.getProducts();
+    box.delete(oldKey);
+    box.put(product.name, product);
+    _log.i("Updated product '\n${product.name}' to ${product.toString()}.");
   }
 }

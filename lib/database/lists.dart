@@ -14,7 +14,7 @@ class ListonicLists {
   static final Set<ListonicLists> listonicLists = Set.identity();
 
   static Future<List<ListonicLists>> getMyLists() async {
-    Box box = await Boxes.getLists();
+    Box box = await ListonicBoxes.getLists();
     var listOfLists = box.values.toList(growable: false).cast<ListonicLists>();
     _log.i("Got user lists from database:${listOfLists.toString()}");
     return listOfLists;
@@ -22,7 +22,7 @@ class ListonicLists {
 
   static Future<bool> addListToMyLists(Product dbEntry) async {
     try {
-      Box box = await Boxes.getLists();
+      Box box = await ListonicBoxes.getLists();
       box.add(dbEntry);
       _log.i("Added ${dbEntry.toString()} to '$boxName'.");
       return true;

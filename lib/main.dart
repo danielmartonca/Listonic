@@ -4,6 +4,7 @@ import 'package:listonic_clone/model/product.dart';
 import 'package:listonic_clone/view/home.dart';
 import 'package:logger/logger.dart';
 
+// import 'database/boxes.dart';
 import 'model/listonic_list.dart';
 
 final log = Logger(printer: PrettyPrinter(), output: ConsoleOutput());
@@ -13,6 +14,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(ListonicListAdapter());
+
+  // ListonicBoxes.clearBoxes();
 
   runApp(const MyApp());
 }

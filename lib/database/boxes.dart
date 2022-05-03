@@ -8,17 +8,13 @@ import 'products.dart';
 
 final log = Logger(printer: PrettyPrinter(), output: ConsoleOutput());
 
-class Boxes {
+class ListonicBoxes {
   static var created = false;
 
   static Future<Box<Product>> getProducts() async {
     if (created == false) {
       await Hive.openBox<Product>(Products.boxName);
-      log.i("Opened ${Products.boxName} box.");
-
       await Hive.openBox<ListonicList>(ListonicLists.boxName);
-      log.i("Opened ${ListonicLists.boxName} box.");
-
       created = true;
     }
     return Hive.box<Product>(Products.boxName);
@@ -27,13 +23,15 @@ class Boxes {
   static Future<Box<ListonicList>> getLists() async {
     if (created == false) {
       await Hive.openBox<Product>(Products.boxName);
-      log.i("Opened ${Products.boxName} box.");
-
       await Hive.openBox<ListonicList>(ListonicLists.boxName);
-      log.i("Opened ${ListonicLists.boxName} box.");
-
       created = true;
     }
     return Hive.box<ListonicList>(ListonicLists.boxName);
+  }
+
+  static void clearBoxes() {
+    getProducts().then((value) => value.clear());
+    getLists().then((value) => value.clear());
+    log.wtf("Cleared boxes.");
   }
 }

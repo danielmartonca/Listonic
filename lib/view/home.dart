@@ -84,7 +84,7 @@ class _HomeWindowState extends State<HomeWindow> {
     log.i("switchToEmptyBody called");
     setState(() {
       _navMyListsColor = Colors.white;
-      _navProductsColor = Colors.white;
+      _navProductsColor = _onclickButtonColor;
       _body = const ProductsWindow();
     });
   }

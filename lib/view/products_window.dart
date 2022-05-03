@@ -60,7 +60,7 @@ class _ProductsWindowState extends State<ProductsWindow> {
             padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Container(
-              height: 400,
+              height: 500,
               color: Colors.amber,
               child: Center(
                 child: Column(
@@ -167,12 +167,19 @@ class _ProductsWindowState extends State<ProductsWindow> {
                                 measureUnit: _formControllerMeasureUnit.text,
                                 type: _formControllerType.text));
 
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
                                       "Added new product '${_formControllerName.text}'"),
                                   backgroundColor: Colors.green),
                             );
+
+                            _formControllerName.clear();
+                            _formControllerDefaultQuantity.clear();
+                            _formControllerMeasureUnit.clear();
+                            _formControllerType.clear();
+
                             Navigator.pop(context);
                           }
                         },

@@ -36,4 +36,9 @@ class Products {
     box.put(product.name, product);
     _log.i("Updated product '\n${product.name}' to ${product.toString()}.");
   }
+  static Future<void> deleteProduct(String oldKey ) async {
+    Box box = await ListonicBoxes.getProducts();
+    box.delete(oldKey);
+    _log.i("Deleted product by key(name) '$oldKey'");
+  }
 }

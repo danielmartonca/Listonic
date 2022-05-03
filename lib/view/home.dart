@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:listonic_clone/windows/my_lists_window.dart';
-import 'package:listonic_clone/windows/products_window.dart';
+import 'package:listonic_clone/view/my_lists_window.dart';
+import 'package:listonic_clone/view/products_window.dart';
+import 'package:flutter/gestures.dart';
 import 'package:logger/logger.dart';
 
 final log = Logger(printer: PrettyPrinter(), output: ConsoleOutput());
@@ -18,13 +19,46 @@ class _HomeWindowState extends State<HomeWindow> {
   late Widget _body;
   Color _navMyListsColor = Colors.white;
   Color _navProductsColor = Colors.white;
+  final double _iconSizeScale = 1;
+  final double _emptyBodyTextSize = 20;
   static const Color _onclickButtonColor = Colors.orange;
 
   _HomeWindowState() {
-    _body = const Expanded(
+    _body = emptyBodyPaint();
+  }
+
+  Widget emptyBodyPaint() {
+    return Expanded(
         child: Align(
             child: Center(
-      child: Text("Body text"),
+      child: Column(children: [
+        Icon(
+          Icons.featured_play_list,
+          color: Colors.green,
+          size: _iconSizeScale * 100,
+        ),
+        RichText(
+            text: TextSpan(
+          style: TextStyle(
+            fontSize: _emptyBodyTextSize,
+            color: Colors.black,
+          ),
+          children: <TextSpan>[
+            const TextSpan(text: 'Check '),
+            TextSpan(
+                text: 'MyLists',
+                recognizer: TapGestureRecognizer()..onTap = switchToMyLists,
+                style: const TextStyle(
+                    color: Colors.green, fontWeight: FontWeight.bold)),
+            const TextSpan(text: ' or '),
+            TextSpan(
+                text: 'Products',
+                recognizer: TapGestureRecognizer()..onTap = switchToProducts,
+                style: const TextStyle(
+                    color: Colors.green, fontWeight: FontWeight.bold)),
+          ],
+        ))
+      ], mainAxisAlignment: MainAxisAlignment.center),
     )));
   }
 
@@ -33,7 +67,7 @@ class _HomeWindowState extends State<HomeWindow> {
     setState(() {
       _navMyListsColor = Colors.white;
       _navProductsColor = Colors.white;
-      _body = const ProductsWindow();
+      _body = emptyBodyPaint();
     });
   }
 
@@ -47,16 +81,11 @@ class _HomeWindowState extends State<HomeWindow> {
   }
 
   void switchToProducts() {
-    log.i("switchToProducts called");
+    log.i("switchToEmptyBody called");
     setState(() {
       _navMyListsColor = Colors.white;
-      _navProductsColor = _onclickButtonColor;
-      _body = const Expanded(
-        child: Align(
-            child: Center(
-          child: Text("My Products"),
-        )),
-      );
+      _navProductsColor = Colors.white;
+      _body = const ProductsWindow();
     });
   }
 

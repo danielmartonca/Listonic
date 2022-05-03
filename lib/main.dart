@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:listonic_clone/database/populars.dart';
 import 'package:listonic_clone/model/product.dart';
-import 'package:listonic_clone/windows/home.dart';
+import 'package:listonic_clone/view/home.dart';
 
 import 'model/listonic_list.dart';
 

@@ -397,7 +397,8 @@ class _ProductsWindowState extends State<ProductsWindow> {
   }
 
   Widget createListWidget() {
-    return ListView.builder(
+    return Expanded(
+        child: ListView.builder(
       shrinkWrap: true,
       itemCount: _productsList.length,
       // Provide a builder function. This is where the magic happens.
@@ -409,6 +410,7 @@ class _ProductsWindowState extends State<ProductsWindow> {
           margin: const EdgeInsets.all(1.0),
           padding: const EdgeInsets.all(1.0),
           decoration: BoxDecoration(
+              color: Colors.green,
               border:
                   Border.all(color: Colors.green, style: BorderStyle.solid)),
           child: ListTile(
@@ -419,7 +421,7 @@ class _ProductsWindowState extends State<ProductsWindow> {
           ),
         );
       },
-    );
+    ));
   }
 
   Widget getProductsListWidget() {
@@ -435,10 +437,7 @@ class _ProductsWindowState extends State<ProductsWindow> {
                 child: Text("Loading data..."));
           } else {
             _productsList = snapshot.data;
-            return SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: createListWidget(),
-            );
+            return createListWidget();
           }
         });
   }
@@ -475,7 +474,7 @@ class _ProductsWindowState extends State<ProductsWindow> {
               child: IconButton(
                 onPressed: openAddProductsModal,
                 icon: const Icon(Icons.add_circle_rounded),
-                color: Colors.green,
+                color: Colors.amber,
                 iconSize: _addProductsIconSize,
               ),
             )),

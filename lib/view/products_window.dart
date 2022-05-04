@@ -407,8 +407,8 @@ class _ProductsWindowState extends State<ProductsWindow> {
         final Product product = _productsList[index];
 
         return Container(
-          margin: const EdgeInsets.all(1.0),
-          padding: const EdgeInsets.all(1.0),
+          margin: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
               color: Colors.green,
               border:

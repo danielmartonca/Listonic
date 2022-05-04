@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:listonic_clone/database/products.dart';
 import 'package:logger/logger.dart';
 
@@ -428,13 +427,13 @@ class _ProductsWindowState extends State<ProductsWindow> {
     return FutureBuilder(
         future: Products.getProducts(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            sleep(const Duration(milliseconds: 500));
-          }
           if (!snapshot.hasData) {
-            return const Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                child: Text("Loading data..."));
+            return const Center(
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  // child: Text("Loading data...")),
+                  child: SpinKitFadingCube(size: 30,color: Colors.green,),
+            ));
           } else {
             _productsList = snapshot.data;
             return createListWidget();

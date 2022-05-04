@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:hive/hive.dart';
-import 'package:listonic_clone/model/product.dart';
+import 'package:listonic_clone/model/listonic_list.dart';
 
 import 'package:logger/logger.dart';
 
@@ -11,24 +11,35 @@ class ListonicLists {
   static final _log = Logger(printer: PrettyPrinter());
   static const String boxName = "listsBox";
 
-  static final Set<ListonicLists> listonicLists = Set.identity();
-
-  static Future<List<ListonicLists>> getMyLists() async {
+  static Future<List<ListonicList>> getMyLists() async {
     Box box = await ListonicBoxes.getLists();
-    var listOfLists = box.values.toList(growable: false).cast<ListonicLists>();
+    var listOfLists = box.values.toList(growable: false).cast<ListonicList>();
     _log.i("Got user lists from database:${listOfLists.toString()}");
     return listOfLists;
   }
 
-  static Future<bool> addListToMyLists(Product dbEntry) async {
+  static Future<bool> addListToMyLists(ListonicList dbEntry) async {
     try {
       Box box = await ListonicBoxes.getLists();
-      box.add(dbEntry);
-      _log.i("Added ${dbEntry.toString()} to '$boxName'.");
+      box.put(dbEntry.name, dbEntry);
+      _log.i("Added ${dbEntry.toString()}to '$boxName'.");
       return true;
     } catch (e) {
       _log.e(e);
       return false;
     }
+  }
+
+  static Future<void> updateList(String oldKey, ListonicList list) async {
+    Box box = await ListonicBoxes.getLists();
+    box.delete(oldKey);
+    box.put(list.name, list);
+    _log.i("Updated list '\n${list.name}' to ${list.toString()}.");
+  }
+
+  static Future<void> deleteList(String oldKey) async {
+    Box box = await ListonicBoxes.getLists();
+    box.delete(oldKey);
+    _log.i("Deleted list by key(name) '$oldKey'");
   }
 }

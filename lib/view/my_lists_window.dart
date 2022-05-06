@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 
 import '../database/lists.dart';
 import '../model/product.dart';
+import 'custom_list_window.dart';
 
 final log = Logger(printer: PrettyPrinter(), output: ConsoleOutput());
 
@@ -17,29 +18,17 @@ class MyListsWindow extends StatefulWidget {
 
 class _MyListsWindowState extends State<MyListsWindow> {
   final double _addListsIconSize = 50;
+
   List<ListonicList> _listOfCustomsList =
       List<ListonicList>.empty(growable: true);
 
   late ListonicList currentList;
+  late List<Product> _productsList;
+  late final Map<Product, Color> _selectedProductsMap =
+      Map<Product, Color>.identity();
 
   final _formKey = GlobalKey<FormState>();
   final _formControllerName = TextEditingController();
-
-  void addProductToList(ListonicList list) {}
-
-  Widget getCurrentListProducts() {
-    if (currentList.products.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.only(top: 50),
-        child: Text(
-          "List is empty. Add products to it!",
-          style: TextStyle(fontSize: 20),
-        ),
-      );
-    } else {
-      return Text(currentList.products.toString());
-    }
-  }
 
   void openAddListsModal() {
     showModalBottomSheet(
@@ -126,60 +115,13 @@ class _MyListsWindowState extends State<MyListsWindow> {
 
   void openListModal(ListonicList list) {
     currentList = list;
+    _selectedProductsMap.clear();
     _formControllerName.text = list.name;
 
     showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Container(
-              height: double.infinity,
-              color: Colors.amber,
-              child: Center(
-                child: Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: Center(
-                            child: Text(
-                              list.name,
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: getCurrentListProducts())
-                      ],
-                    ),
-                    Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 5, 15),
-                          child: IconButton(
-                            onPressed: () => addProductToList(list),
-                            icon: const Icon(Icons.add_circle_rounded),
-                            color: Colors.green,
-                            iconSize: _addListsIconSize,
-                          ),
-                        ))
-                  ],
-                ),
-              ),
-            ));
-      },
-    );
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) => ListsBottomSheet(list));
   }
 
   void openDeleteModal(String listName) {

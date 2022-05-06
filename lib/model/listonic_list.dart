@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:listonic_clone/model/product.dart';
 
 import 'package:hive/hive.dart';
@@ -15,10 +14,9 @@ class ListonicList extends HiveObject {
 
   ListonicList(this._name, this._products);
 
-
   @override
   String toString() {
-    return 'ListonicList{_name: $_name, _products: $_products}';
+    return 'ListonicList{  _name: $_name, \n_products: $_products\n}';
   }
 
   List<Product> get products => _products;
@@ -27,7 +25,7 @@ class ListonicList extends HiveObject {
 
   Widget buildTitle(BuildContext context) {
     return Center(
-      child: Text(_name,style: const TextStyle(fontSize: 20)),
+      child: Text(_name, style: const TextStyle(fontSize: 20)),
     );
   }
 }

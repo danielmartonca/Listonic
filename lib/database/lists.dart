@@ -34,7 +34,7 @@ class ListonicLists {
     Box box = await ListonicBoxes.getLists();
     box.delete(oldKey);
     box.put(list.name, list);
-    _log.i("Updated list '\n${list.name}' to ${list.toString()}.");
+    _log.i("Updated list '${list.name}' to \n${list.toString()}.");
   }
 
   static Future<void> deleteList(String oldKey) async {

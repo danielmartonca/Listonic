@@ -43,22 +43,12 @@ class _CustomListProductsBottomSheetState
       widget.setStateParent(() {
         setState(() {
           currentList.products.add(product);
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //       content: Text("Added '${product.name}' to the list."),
-          //       backgroundColor: Colors.green),
-          // );
         });
       });
     } else {
       widget.setStateParent(() {
         setState(() {
           currentList.products.remove(product);
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //       content: Text("Removed '${product.name}' from the list."),
-          //       backgroundColor: Colors.grey),
-          // );
         });
       });
     }

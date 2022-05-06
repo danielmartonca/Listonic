@@ -429,13 +429,23 @@ class _ProductsWindowState extends State<ProductsWindow> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                  // child: Text("Loading data...")),
-                  child: SpinKitFadingCube(size: 30,color: Colors.green,),
+                child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              // child: Text("Loading data...")),
+              child: SpinKitFadingCube(
+                size: 30,
+                color: Colors.green,
+              ),
             ));
           } else {
             _productsList = snapshot.data;
+            _productsList.sort((a, b) {
+              if (a.type.compareTo(b.type) == 0) {
+                return a.name.compareTo(b.name);
+              } else {
+                return a.type.compareTo(b.type);
+              }
+            });
             return createListWidget();
           }
         });

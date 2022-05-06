@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:listonic_clone/model/listonic_list.dart';
 
-import '../database/boxes.dart';
 import '../database/lists.dart';
 import '../database/products.dart';
 import '../model/product.dart';

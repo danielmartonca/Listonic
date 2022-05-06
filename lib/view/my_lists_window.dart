@@ -23,7 +23,6 @@ class _MyListsWindowState extends State<MyListsWindow> {
       List<ListonicList>.empty(growable: true);
 
   late ListonicList currentList;
-  late List<Product> _productsList;
   late final Map<Product, Color> _selectedProductsMap =
       Map<Product, Color>.identity();
 

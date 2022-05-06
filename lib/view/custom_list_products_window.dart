@@ -36,16 +36,12 @@ class _CustomListProductsBottomSheetState
   final _notSelectedColor = Colors.green;
   final _selectedColor = Colors.amber;
 
-  late final Map<Product, Color> _selectedProductsMap =
-      Map<Product, Color>.identity();
   late List<Product> _productsList;
 
   void addProductToCurrentList(ListonicList currentList, Product product) {
-    log.wtf(_selectedProductsMap[product]);
     if (!currentList.products.contains(product)) {
       widget.setStateParent(() {
         setState(() {
-          _selectedProductsMap[product] = _selectedColor;
           currentList.products.add(product);
           // ScaffoldMessenger.of(context).showSnackBar(
           //   SnackBar(
@@ -57,7 +53,6 @@ class _CustomListProductsBottomSheetState
     } else {
       widget.setStateParent(() {
         setState(() {
-          _selectedProductsMap[product] = _notSelectedColor;
           currentList.products.remove(product);
           // ScaffoldMessenger.of(context).showSnackBar(
           //   SnackBar(
@@ -79,8 +74,9 @@ class _CustomListProductsBottomSheetState
       // Convert each item into a widget based on the type of item it is.
       itemBuilder: (context, index) {
         final Product product = _productsList[index];
-        Color? color = _selectedProductsMap[product];
-        color ??= _notSelectedColor;
+        Color color = widget.currentList.products.contains(product)
+            ? _selectedColor
+            : _notSelectedColor;
 
         return Container(
           margin: const EdgeInsets.all(5.0),
@@ -147,9 +143,6 @@ class _CustomListProductsBottomSheetState
                         ));
                       } else {
                         _productsList = snapshot.data;
-                        for (var product in _productsList) {
-                          _selectedProductsMap[product] = _notSelectedColor;
-                        }
                         return createProductsListWidget();
                       }
                     })

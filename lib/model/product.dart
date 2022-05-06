@@ -29,6 +29,24 @@ class Product extends HiveObject {
         _measureUnit = measureUnit,
         _type = type;
 
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Product &&
+          runtimeType == other.runtimeType &&
+          _productName == other._productName &&
+          _defaultQuantity == other._defaultQuantity &&
+          _measureUnit == other._measureUnit &&
+          _type == other._type;
+
+  @override
+  int get hashCode =>
+      _productName.hashCode ^
+      _defaultQuantity.hashCode ^
+      _measureUnit.hashCode ^
+      _type.hashCode;
+
   @override
   String toString() {
     return '\nProduct{_productName: $_productName, _defaultQuantity: $_defaultQuantity, _measureUnit: $_measureUnit, _type: $_type}';
